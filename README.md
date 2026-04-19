@@ -5,6 +5,7 @@ Some useful links to get started.
 * [Getting started.](https://github.com/Ryhon0/VostokMods/wiki) Thank you [Ryhon](https://github.com/Ryhon0).
 * [MCM configuration.](https://github.com/DoinkOink/Mod-Configuration-Menu-Road-To-Vostok/wiki) Thank you [DoinkOink](https://github.com/DoinkOink).
 # Tips
+To debug mod in your work environment, simply make `Main.gd` as an autoload in the `Project Settings`.<br><br>
 If your mod uses any `.tres` or `.res` files, before you pack it in `.vmz` Archive make sure to open those files in any text editor and change the path field.<br>
 + <b>E.g.</b> In `ShowTimeOfDay` mod, I am using `TimeFormat.tres`. So before making the mod as archive.<br>
 + Open it in any text editor.<br>
