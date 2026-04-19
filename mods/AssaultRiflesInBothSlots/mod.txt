@@ -1,0 +1,7 @@
+[mod]
+name="Assault Rifles in Both Slots"
+id="assault_rifles_in_both_slots"
+version="1.0.0"
+
+[autoload]
+ARBS="res://AssaultRiflesInBothSlots/Main.gd"

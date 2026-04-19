@@ -1,0 +1,10 @@
+[mod]
+name="Show Time of The Day"
+id="show_time_of_the_day"
+version="1.0.3"
+
+[autoload]
+STOTD="res://ShowTimeOfDay/Main.gd"
+
+[updates]
+modworkshop=56163
