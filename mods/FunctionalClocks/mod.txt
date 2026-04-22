@@ -1,0 +1,7 @@
+[mod]
+name="Functional Clocks"
+id="functional_clocks"
+version="1.0.0"
+
+[autoload]
+FunctionalClocks="res://FunctionalClocks/Main.gd"
