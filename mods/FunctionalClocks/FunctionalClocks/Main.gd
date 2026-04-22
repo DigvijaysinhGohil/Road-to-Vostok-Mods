@@ -4,8 +4,8 @@ const ALARM_CLOCK_ORIGINAL_MAT_PATH = "res://Items/Electronics/Alarm_Clock/Files
 const SCHOOL_CLOCK_ORIGINAL_MAT_PATH = "res://Assets/Clock_School/Files/MT_Clock_School.tres"
 
 const ALARM_CLOCK_MODDED_SHADER_PATH = "Clock.gdshader"
-const ALARM_CLOCK_MODDED_TEX_PATH = "AlarmClock/Tex_AClock_AL.png"
-const SCHOOL_CLOCK_MODDED_TEX_PATH = "SchoolClock/Tex_Clock_School_AL.png"
+const ALARM_CLOCK_MODDED_TEX_PATH = "AlarmClock/Tex_AClock_AL.jpg"
+const SCHOOL_CLOCK_MODDED_TEX_PATH = "SchoolClock/Tex_Clock_School_AL.jpg"
 
 var alarmClockMat: ShaderMaterial
 var schoolClockMat: ShaderMaterial
@@ -32,7 +32,7 @@ func _ready() -> void:
     schoolClockMat.set_shader_parameter("albedo", schoolClockTex)
 
 func _physics_process(_delta: float) -> void:
-    if Engine.get_physics_frames() % 100 == 0:
+    if Engine.get_physics_frames() % 300 == 0:
         var minutes = GetGameTimeInMinutes()
         alarmClockMat.set_shader_parameter("minutes", minutes)
         schoolClockMat.set_shader_parameter("minutes", minutes)
