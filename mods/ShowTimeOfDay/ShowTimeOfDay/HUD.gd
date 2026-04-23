@@ -2,12 +2,12 @@ extends "res://Scripts/HUD.gd"
 
 @onready var equipmentUI = $"../Interface/Equipment"
 
-#const TIME_FORMAT_PATH = "./TimeFormat.tres" # For Testing
-const TIME_FORMAT_PATH = "res://ShowTimeOfDay/TimeFormat.tres"
+const TIME_FORMAT_PATH = "res://mods/ShowTimeOfDay/ShowTimeOfDay/TimeFormat.tres" # For Testing
+#const TIME_FORMAT_PATH = "res://ShowTimeOfDay/TimeFormat.tres" # For Deployment
 
 var mapInfo: Node
 var timeLabel: Label
-var timeFormat
+var timeFormat: TimeFormat
 
 func _ready() -> void:
     timeFormat = load(TIME_FORMAT_PATH)
@@ -46,8 +46,11 @@ func GetTimeOfDay() -> String:
 
     hours = hours % 24
 
-    if !timeFormat.twelveHour:
-        return "%02d:%02d" % [hours, minutes]
+    if timeFormat:
+        if !timeFormat.twelveHour:
+            return "%02d:%02d" % [hours, minutes]
+    else:
+        print("TimeFormat.tres is null")
 
     if hours < 1:
         hours = 12

@@ -3,14 +3,13 @@ extends Node
 const MCM_HELPERS_PATH := "res://ModConfigurationMenu/Scripts/Doink Oink/MCM_Helpers.tres"
 const MCM_MOD_ID = "ShowTimeOfDay"
 const MCM_FILE_PATH = "user://MCM/ShowTimeOfDay"
-const TIME_FORMAT_PATH = "res://ShowTimeOfDay/TimeFormat.tres"
-#var timeFormat: TimeFormat = preload("./TimeFormat.tres") # For Testing
+const TIME_FORMAT_PATH = "TimeFormat.tres"
 
 var McmHelpers = null
 var timeFormat
 
 func _ready() -> void:
-    timeFormat = load(TIME_FORMAT_PATH)
+    timeFormat = load(get_script().resource_path.get_base_dir().path_join(TIME_FORMAT_PATH))
     var hudScript = load(get_script().resource_path.get_base_dir().path_join("HUD.gd"))
     hudScript.reload()
     var parentScript = hudScript.get_base_script()
