@@ -11,5 +11,6 @@ If your mod uses any `.tres` or `.res` files, before you pack it in `.vmz` Archi
 + Open `.tres` file in any text editor.<br>
 + Find the `ext_resource` attribute and edit its `path` property to `res://` + consider your mod.txt as root and give path to your `Resource script.gd`.<br>
 + In this case it should look like `path="res://ShowTimeOfDay/TimeFormat.gd"`.<br><br>
-If your mod, DO NOT statically type your `gdscript` types.<br>
+
+In your mod, DO NOT statically type your `gdscript` types.<br>
 + <b>E.g.</b> If `Example.gd` is in the mod, don't go, `var example: Example`.<br>
