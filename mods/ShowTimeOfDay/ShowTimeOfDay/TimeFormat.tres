@@ -1,7 +1,6 @@
 [gd_resource type="Resource" script_class="TimeFormat" format=3 uid="uid://b8y4mb4hpfn8y"]
 
-[ext_resource type="Script" uid="uid://ckneudueqxo2o" path="res://mods/ShowTimeOfDay/ShowTimeOfDay/TimeFormat.gd" id="1_26ftd"]
+[ext_resource type="Script" path="res://mods/ShowTimeOfDay/ShowTimeOfDay/TimeFormat.gd" id="1_26ftd"]
 
 [resource]
 script = ExtResource("1_26ftd")
-metadata/_custom_type_script = "uid://ckneudueqxo2o"
