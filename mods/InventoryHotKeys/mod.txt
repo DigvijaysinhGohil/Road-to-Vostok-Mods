@@ -1,0 +1,7 @@
+[mod]
+name="Inventory Hot Keys"
+id="inventory_hot_keys"
+version="1.0.0"
+
+[autoload]
+InventoryHotKeys="res://InventoryHotKeys/Main.gd"
