@@ -180,7 +180,19 @@ func RemoveMag(currentItem, currentGrid) -> void:
             magazineFound = true
             break
 
-    if !magazineFound: return
+    if !magazineFound:
+        # Mag not found try to clear chamber.
+        if gameData.isOccupied || gameData.isDead: return
+
+        if currentItem.slotData.itemData.weaponAction != "Manual" && \
+        currentItem.slotData.amount == 0 && currentItem.slotData.chamber && \
+        currentItem.slotData.itemData.type == "Weapon":
+            if !currentGrid:
+                currentGrid = inventoryGrid
+            UnloadWeapon(currentItem, currentGrid)
+            HideToolTip()
+            PlayClick()
+        return
 
     var contextAmmo = currentItem.slotData.amount
     var removeItem = currentItem.Remove(magazineIndex)
