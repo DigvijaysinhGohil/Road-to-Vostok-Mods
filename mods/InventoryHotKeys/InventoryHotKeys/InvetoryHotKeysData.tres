@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="InventoryHotKeysData" format=3]
-
-[ext_resource type="Script" path="res://InventoryHotKeys/InventoryHotKeysData.gd" id="1_imvyy"]
-
-[resource]
-script = ExtResource("1_imvyy")

@@ -1,12 +1,61 @@
 extends "res://Scripts/Interface.gd"
 
-#const HOT_KEYS_DATA_PATH = "res://mods/InventoryHotKeys/InventoryHotKeys/InvetoryHotKeysData.tres" # For Testing
-const HOT_KEYS_DATA_PATH = "res://InventoryHotKeys/InvetoryHotKeysData.tres" # For Deployment
+# Properties to determine the key press only on current frame
+var hasUnloadMegKeyHeld: bool = false:
+    set(value):
+        if hasUnloadMegKeyHeld != value:
+            hasUnloadMegKeyHeld = value
+            if hasUnloadMegKeyHeld: FireUnloadMag()
+    get: return hasUnloadMegKeyHeld
 
-var inventoryHotKeys
+var hasRemoveMagKeyHeld: bool = false:
+    set(value):
+        if hasRemoveMagKeyHeld != value:
+            hasRemoveMagKeyHeld = value
+            if hasRemoveMagKeyHeld: FireRemoveMag()
+    get: return hasRemoveMagKeyHeld
 
-func _ready() -> void:
-    inventoryHotKeys = load(HOT_KEYS_DATA_PATH)
+var hasRemoveOpticKeyHeld: bool = false:
+    set(value):
+        if hasRemoveOpticKeyHeld != value:
+            hasRemoveOpticKeyHeld = value
+            if hasRemoveOpticKeyHeld: FireRemoveOptic()
+    get: return hasRemoveOpticKeyHeld
+
+var hasRemoveLaserKeyHeld: bool = false:
+    set(value):
+        if hasRemoveLaserKeyHeld != value:
+            hasRemoveLaserKeyHeld = value
+            if hasRemoveLaserKeyHeld: FireRemoveLaser()
+    get: return hasRemoveLaserKeyHeld
+
+var hasRemoveMuzzleKeyHeld: bool = false:
+    set(value):
+        if hasRemoveMuzzleKeyHeld != value:
+            hasRemoveMuzzleKeyHeld = value
+            if hasRemoveMuzzleKeyHeld: FireRemoveMuzzle()
+    get: return hasRemoveMuzzleKeyHeld
+
+var hasSplitKeyHeld: bool = false:
+    set(value):
+        if hasSplitKeyHeld != value:
+            hasSplitKeyHeld = value
+            if hasSplitKeyHeld: FireSplit()
+    get: return hasSplitKeyHeld
+
+var hasTakeKeyHeld: bool = false:
+    set(value):
+        if hasTakeKeyHeld != value:
+            hasTakeKeyHeld = value
+            if hasTakeKeyHeld: FireTake()
+    get: return hasTakeKeyHeld
+
+var hasConsumeKeyHeld: bool = false:
+    set(value):
+        if hasConsumeKeyHeld != value:
+            hasConsumeKeyHeld = value
+            if hasConsumeKeyHeld: FireConsume()
+    get: return hasConsumeKeyHeld
 
 func _physics_process(delta: float) -> void:
     super(delta)
@@ -19,131 +68,109 @@ func _physics_process(delta: float) -> void:
         CheckForRemoveMuzzle()
         CheckForSplitStack()
         CheckForTakeXAmount()
+        CheckForConsumeItem()
 
 func CheckForUnloadMag() -> void:
-    if gameData.isOccupied || gameData.isDead:
-        return
-
-    var unloadModifierPressed: bool = false
-    match inventoryHotKeys.unloadModifierKey:
-        0: unloadModifierPressed = true
-        1: unloadModifierPressed = Input.is_key_pressed(KEY_SHIFT)
-        2: unloadModifierPressed = Input.is_key_pressed(KEY_ALT)
-        3: unloadModifierPressed = Input.is_key_pressed(KEY_CTRL)
-
-    var unloadKeyPressed: bool = Input.is_action_just_pressed(inventoryHotKeys.UNLOAD_MAG_ACTION)
-    if unloadModifierPressed && unloadKeyPressed:
-        var currentItem = GetHoverItem()
-        var currentGrid = GetHoverGrid()
-        if visible && currentItem && currentGrid:
-            if currentItem.slotData.itemData.subtype == "Magazine" && currentItem.slotData.amount != 0:
-                UnloadMagazine(currentItem, currentGrid)
-                HideToolTip()
-                PlayClick()
+    # Shift + R
+    if gameData.isOccupied || gameData.isDead: return
+    hasUnloadMegKeyHeld = Input.is_key_pressed(KEY_SHIFT) && Input.is_key_pressed(KEY_R)
 
 func CheckForRemoveMag() -> void:
-    var removeMagModifierPressed: bool = false
-    match inventoryHotKeys.removeMagModifierKey:
-        0: removeMagModifierPressed = true
-        1: removeMagModifierPressed = Input.is_key_pressed(KEY_SHIFT)
-        2: removeMagModifierPressed = Input.is_key_pressed(KEY_ALT)
-        3: removeMagModifierPressed = Input.is_key_pressed(KEY_CTRL)
-
-    var removeMagKeyPressed: bool = Input.is_action_just_pressed(inventoryHotKeys.REMOVE_MAG_ACTION)
-    if removeMagModifierPressed && removeMagKeyPressed:
-        var currentItem = GetHoverItem()
-        var currentGrid = GetHoverGrid()
-        if !currentItem:
-            currentItem = GetHoverEquipment()
-        if visible && currentItem:
-            if currentItem.slotData.itemData.type != "Weapon": return
-            RemoveMag(currentItem, currentGrid)
+    # Shift + R
+    hasRemoveMagKeyHeld = Input.is_key_pressed(KEY_SHIFT) && Input.is_key_pressed(KEY_R)
 
 func CheckForRemoveOptic() -> void:
-    var removeOpticModifierPressed: bool = false
-    match inventoryHotKeys.removeOpticModifierKey:
-        0: removeOpticModifierPressed = true
-        1: removeOpticModifierPressed = Input.is_key_pressed(KEY_SHIFT)
-        2: removeOpticModifierPressed = Input.is_key_pressed(KEY_ALT)
-        3: removeOpticModifierPressed = Input.is_key_pressed(KEY_CTRL)
-
-    var removeOpticKeyPressed: bool = Input.is_action_just_pressed(inventoryHotKeys.REMOVE_OPTIC_ACTION)
-    if removeOpticModifierPressed && removeOpticKeyPressed:
-        var currentItem = GetHoverItem()
-        var currentGrid = GetHoverGrid()
-        if !currentItem:
-            currentItem = GetHoverEquipment()
-        if visible && currentItem:
-            if currentItem.slotData.itemData.type != "Weapon": return
-            RemoveOpticSight(currentItem, currentGrid)
+    # Shift + F
+    hasRemoveOpticKeyHeld = Input.is_key_pressed(KEY_SHIFT) && Input.is_key_pressed(KEY_F)
 
 func CheckForRemoveLaser() -> void:
-    var removeLaserModifierPressed: bool = false
-    match inventoryHotKeys.removeLaserModifierKey:
-        0: removeLaserModifierPressed = true
-        1: removeLaserModifierPressed = Input.is_key_pressed(KEY_SHIFT)
-        2: removeLaserModifierPressed = Input.is_key_pressed(KEY_ALT)
-        3: removeLaserModifierPressed = Input.is_key_pressed(KEY_CTRL)
-
-    var removeLaserKeyPressed: bool = Input.is_action_just_pressed(inventoryHotKeys.REMOVE_LASER_ACTION)
-    if removeLaserModifierPressed && removeLaserKeyPressed:
-        var currentItem = GetHoverItem()
-        var currentGrid = GetHoverGrid()
-        if !currentItem:
-            currentItem = GetHoverEquipment()
-        if visible && currentItem:
-            if currentItem.slotData.itemData.type != "Weapon": return
-            RemoveLaser(currentItem, currentGrid)
+    # Shift + T
+    hasRemoveLaserKeyHeld = Input.is_key_pressed(KEY_SHIFT) && Input.is_key_pressed(KEY_T)
 
 func CheckForRemoveMuzzle() -> void:
-    var removeMuzzleModifierPressed: bool = false
-    match inventoryHotKeys.removeMuzzleModifierKey:
-        0: removeMuzzleModifierPressed = true
-        1: removeMuzzleModifierPressed = Input.is_key_pressed(KEY_SHIFT)
-        2: removeMuzzleModifierPressed = Input.is_key_pressed(KEY_ALT)
-        3: removeMuzzleModifierPressed = Input.is_key_pressed(KEY_CTRL)
-
-    var removeMuzzleKeyPressed: bool = Input.is_action_just_pressed(inventoryHotKeys.REMOVE_MUZZLE_ACTION)
-    if removeMuzzleModifierPressed && removeMuzzleKeyPressed:
-        var currentItem = GetHoverItem()
-        var currentGrid = GetHoverGrid()
-        if !currentItem:
-            currentItem = GetHoverEquipment()
-        if visible && currentItem:
-            if currentItem.slotData.itemData.type != "Weapon": return
-            RemoveMuzzle(currentItem, currentGrid)
+    # Alt + F
+    hasRemoveMuzzleKeyHeld = Input.is_key_pressed(KEY_ALT) && Input.is_key_pressed(KEY_F)
 
 func CheckForSplitStack() -> void:
-    var splitModifierPressed: bool = false
-    match inventoryHotKeys.splitModifierKey:
-        0: splitModifierPressed = true
-        1: splitModifierPressed = Input.is_key_pressed(KEY_SHIFT)
-        2: splitModifierPressed = Input.is_key_pressed(KEY_ALT)
-        3: splitModifierPressed = Input.is_key_pressed(KEY_CTRL)
-
-    var splitKeyPressed: bool = Input.is_action_just_pressed(inventoryHotKeys.SPLIT_ACTION)
-    if splitModifierPressed && splitKeyPressed:
-        var currentItem = GetHoverItem()
-        var currentGrid = GetHoverGrid()
-        if visible && currentItem && currentGrid:
-            SplitItems(currentItem, currentGrid)
+    # Shift + S
+    hasSplitKeyHeld = Input.is_key_pressed(KEY_SHIFT) && Input.is_key_pressed(KEY_S)
 
 func CheckForTakeXAmount() -> void:
-    var takeModifierPressed: bool = false
-    match inventoryHotKeys.takeModifierKey:
-        0: takeModifierPressed = true
-        1: takeModifierPressed = Input.is_key_pressed(KEY_SHIFT)
-        2: takeModifierPressed = Input.is_key_pressed(KEY_ALT)
-        3: takeModifierPressed = Input.is_key_pressed(KEY_CTRL)
+    # Alt + S
+    hasTakeKeyHeld = Input.is_key_pressed(KEY_ALT) && Input.is_key_pressed(KEY_S)
 
-    var takeKeyPressed: bool = Input.is_action_just_pressed(inventoryHotKeys.TAKE_ACTION)
-    if takeModifierPressed && takeKeyPressed:
-        var currentItem = GetHoverItem()
-        var currentGrid = GetHoverGrid()
-        if visible && currentItem && currentGrid:
-            TakeXAmount(currentItem, currentGrid)
+func CheckForConsumeItem() -> void:
+    # Shift + E
+    if gameData.isOccupied || gameData.isDead: return
+    hasConsumeKeyHeld = Input.is_key_pressed(KEY_SHIFT) && Input.is_key_pressed(KEY_E)
 
-func RemoveMag(currentItem, currentGrid):
+func FireUnloadMag() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if visible && currentItem && currentGrid:
+        if currentItem.slotData.itemData.subtype == "Magazine" && currentItem.slotData.amount != 0:
+            UnloadMagazine(currentItem, currentGrid)
+            HideToolTip()
+            PlayClick()
+
+func FireRemoveMag() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if !currentItem:
+        currentItem = GetHoverEquipment()
+    if visible && currentItem:
+        if currentItem.slotData.itemData.type != "Weapon": return
+        RemoveMag(currentItem, currentGrid)
+
+func FireRemoveOptic() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if !currentItem:
+        currentItem = GetHoverEquipment()
+    if visible && currentItem:
+        if currentItem.slotData.itemData.type != "Weapon": return
+        RemoveOpticSight(currentItem, currentGrid)
+
+func FireRemoveLaser() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if !currentItem:
+        currentItem = GetHoverEquipment()
+    if visible && currentItem:
+        if currentItem.slotData.itemData.type != "Weapon": return
+        RemoveLaser(currentItem, currentGrid)
+
+func FireRemoveMuzzle() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if !currentItem:
+        currentItem = GetHoverEquipment()
+    if visible && currentItem:
+        if currentItem.slotData.itemData.type != "Weapon": return
+        RemoveMuzzle(currentItem, currentGrid)
+
+func FireSplit() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if visible && currentItem && currentGrid:
+        SplitItems(currentItem, currentGrid)
+
+func FireTake() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if visible && currentItem && currentGrid:
+        TakeXAmount(currentItem, currentGrid)
+
+func FireConsume() -> void:
+    var currentItem = GetHoverItem()
+    var currentGrid = GetHoverGrid()
+    if visible && currentItem && currentGrid:
+        if !currentItem.slotData.itemData.usable || currentItem.slotData.state == "Frozen": return
+        Use(currentItem, currentGrid)
+        HideToolTip()
+        PlayClick()
+
+func RemoveMag(currentItem, currentGrid) -> void:
     var nestedItems: Array[ItemData] = currentItem.slotData.nested
     var magazineFound: bool = false
     var magazineIndex: int = -1
@@ -176,7 +203,7 @@ func RemoveMag(currentItem, currentGrid):
         HideToolTip()
         PlayAttach()
 
-func RemoveOpticSight(currentItem, currentGrid):
+func RemoveOpticSight(currentItem, currentGrid) -> void:
     var nestedItems: Array[ItemData] = currentItem.slotData.nested
     var opticSightFound: bool = false
     var opticSightIndex: int = -1
@@ -201,7 +228,7 @@ func RemoveOpticSight(currentItem, currentGrid):
         HideToolTip()
         PlayAttach()
 
-func RemoveMuzzle(currentItem, currentGrid):
+func RemoveMuzzle(currentItem, currentGrid) -> void:
     var nestedItems: Array[ItemData] = currentItem.slotData.nested
     var muzzleFound: bool = false
     var muzzleIndex: int = -1
@@ -226,7 +253,7 @@ func RemoveMuzzle(currentItem, currentGrid):
         HideToolTip()
         PlayAttach()
 
-func RemoveLaser(currentItem, currentGrid):
+func RemoveLaser(currentItem, currentGrid) -> void:
     var nestedItems: Array[ItemData] = currentItem.slotData.nested
     var laserFound: bool = false
     var laserIndex: int = -1
@@ -251,7 +278,7 @@ func RemoveLaser(currentItem, currentGrid):
         HideToolTip()
         PlayAttach()
 
-func SplitItems(currentItem, currentGrid):
+func SplitItems(currentItem, currentGrid) -> void:
     if currentItem.slotData.amount <= 1 || !currentItem.slotData.itemData.stackable:
         return
     var splitAmount = round(currentItem.slotData.amount / 2)
