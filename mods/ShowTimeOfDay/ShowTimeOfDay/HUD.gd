@@ -5,14 +5,12 @@ extends "res://Scripts/HUD.gd"
 const TIME_FORMAT_PATH = "res://mods/ShowTimeOfDay/ShowTimeOfDay/TimeFormat.tres" # For Testing
 #const TIME_FORMAT_PATH = "res://ShowTimeOfDay/TimeFormat.tres" # For Deployment
 
-var mapInfo: Node
 var timeLabel: Label
 var timeFormat: TimeFormat
 
 func _ready() -> void:
     timeFormat = load(TIME_FORMAT_PATH)
     super()
-    mapInfo = get_tree().current_scene.get_node("/root/Map")
     CreateTimeLabel()
 
 func _physics_process(_delta: float):
