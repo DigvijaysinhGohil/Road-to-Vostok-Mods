@@ -184,11 +184,17 @@ func RemoveMag(currentItem, currentGrid) -> void:
         # Mag not found try to clear chamber.
         if gameData.isOccupied || gameData.isDead: return
 
+        if !currentGrid:
+            currentGrid = inventoryGrid
+
         if currentItem.slotData.itemData.weaponAction != "Manual" && \
         currentItem.slotData.amount == 0 && currentItem.slotData.chamber && \
         currentItem.slotData.itemData.type == "Weapon":
-            if !currentGrid:
-                currentGrid = inventoryGrid
+            UnloadWeapon(currentItem, currentGrid)
+            HideToolTip()
+            PlayClick()
+        elif currentItem.slotData.itemData.type == "Weapon" && \
+        currentItem.slotData.itemData.weaponAction == "Manual":
             UnloadWeapon(currentItem, currentGrid)
             HideToolTip()
             PlayClick()
