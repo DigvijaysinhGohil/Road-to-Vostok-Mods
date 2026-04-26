@@ -1,0 +1,7 @@
+[mod]
+name="Increased Sniper Damage"
+id="increased_sniper_damage"
+version="1.0.0"
+
+[autoload]
+IncreasedSniperDamage="res://IncreasedSniperDamage/Main.gd"
