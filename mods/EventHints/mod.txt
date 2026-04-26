@@ -1,0 +1,8 @@
+[mod]
+name="Event Hints"
+id="event-hints"
+version="0.1.0"
+
+[autoload]
+EventHints="res://mods/EventHints/Main.gd"
+Config="res://mods/EventHints/Config.gd"
