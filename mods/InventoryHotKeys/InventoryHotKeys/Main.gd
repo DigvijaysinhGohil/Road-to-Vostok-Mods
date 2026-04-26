@@ -5,3 +5,4 @@ func _ready() -> void:
     interfaceScript.reload()
     var parentScript = interfaceScript.get_base_script()
     interfaceScript.take_over_path(parentScript.resource_path)
+	queue_free()

@@ -17,6 +17,7 @@ var ASSAULT_RIFLES: Array[String] = [
 
 func _ready() -> void:
     update_rifles()
+	queue_free()
 
 func update_rifles() -> void:
     for ar_path in ASSAULT_RIFLES:
