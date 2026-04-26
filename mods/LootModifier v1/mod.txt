@@ -1,0 +1,18 @@
+[mod]
+
+name="Loot Modifier"
+id="loot-modifier"
+version="1.1.7"
+
+[autoload]
+
+LootModifierConfig="res://LootModifier/Config.gd"
+LootModifier="res://LootModifier/Main.gd"
+
+[hooks]
+"res://Scripts/LootContainer.gd" = "GenerateLoot, CreateLoot"
+"res://Scripts/LootSimulation.gd" = "_ready, SpawnItems"
+
+[updates]
+
+modworkshop=56036
