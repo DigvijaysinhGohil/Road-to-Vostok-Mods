@@ -1,0 +1,7 @@
+[mod]
+name="Container Joker Chance"
+id="container_joker_chance"
+version="1.0.0"
+
+[autoload]
+ContainerJokerChance="res://ContainerJokerChance/Main.gd"
