@@ -31,7 +31,7 @@ func _ready() -> void:
 func GenerateLoot() -> void:
     rarityRoll = randi_range(1, 100)
 
-    if !joker && containerJokerChanceData.jokerChance <= rarityRoll:
+    if !joker && rarityRoll <= containerJokerChanceData.jokerChance:
         joker = true
 
     if joker: rarityRoll = 100

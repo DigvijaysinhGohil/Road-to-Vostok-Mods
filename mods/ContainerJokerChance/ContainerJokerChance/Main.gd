@@ -2,6 +2,8 @@ extends Node
 
 const MCM_HELPERS_PATH := "res://ModConfigurationMenu/Scripts/Doink Oink/MCM_Helpers.tres"
 const MCM_MOD_ID = "ContainerJokerChance"
+const MCM_MOD_NAME = "Container Joker Chance"
+const MCM_MOD_DESC = "Customizable special crate spawn chance and container joker chance."
 const MCM_FILE_PATH = "user://MCM/ContainerJokerChance"
 const CONTAINER_JOKER_CHANCE_DATA_PATH = "ContainerJokerChanceData.tres"
 
@@ -63,9 +65,9 @@ func RegisterToMCM() -> void:
     if McmHelpers:
         McmHelpers.RegisterConfiguration(
             MCM_MOD_ID,
-            "Show Time of the Day",
+            MCM_MOD_NAME,
             MCM_FILE_PATH,
-            "Displays in-game time besides the area name, when alarm clock is equipped.",
+            MCM_MOD_DESC,
             {"config.ini": OnMCMSave}
         )
 
