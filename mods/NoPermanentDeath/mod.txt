@@ -1,0 +1,7 @@
+[mod]
+name="No Permanent Death"
+id="no_permanent_death"
+version="1.0.0"
+
+[autoload]
+NoPermanentDeath="res://NoPermanentDeath/Main.gd"
