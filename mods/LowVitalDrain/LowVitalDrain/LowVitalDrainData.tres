@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="LowVitalDrainData" format=3]
+
+[ext_resource type="Script" path="res://LowVitalDrain/LowVitalDrainData.gd" id="1_kbrjq"]
+
+[resource]
+script = ExtResource("1_kbrjq")

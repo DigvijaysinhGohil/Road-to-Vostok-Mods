@@ -1,0 +1,7 @@
+[mod]
+name="Low Vital Drain"
+id="low_vital_drain"
+version="1.0.0"
+
+[autoload]
+LowVitalDrain="res://LowVitalDrain/Main.gd"
